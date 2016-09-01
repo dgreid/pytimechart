@@ -93,10 +93,12 @@ def parse_ftrace(filename,callback):
     fid.seek(0,0)
     last_percent = 0
     # the base regular expressions
+    # <...>-1455  [000] d.h1   117.291772: irq_handler_exit: irq=67 ret=handled
+    # <idle>-0     [003] d..2 52056.675016: cpu_idle: state=1 cpu_id=3
     event_re = re.compile(
-        r'\s*(.+)-([0-9]+)\s+\[([0-9]+)\][^:]*\s+([0-9.]+): ([^:]*): (.*)')
+        r'\s*(.+)-([0-9]+)\s+\[([0-9]+)\][^:]*\s+....\s+([0-9.]+): ([^:]*): (.*)')
     function_re = re.compile(
-        r'\s*(.+)-([0-9]+)\s+\[([0-9]+)\][^:]*\s+([0-9.]+): (.*) <-(.*)')
+        r'\s*(.+)-([0-9]+)\s+\[([0-9]+)\][^:]*\s+....\s+([0-9.]+): (.*) <-(.*)')
     last_timestamp = 0
     linenumber = 0
     for line in fid:
